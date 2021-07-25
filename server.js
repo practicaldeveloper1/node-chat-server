@@ -28,12 +28,24 @@ io.on('connection', socket => {
         //Broadcast when a user connects
         socket.broadcast.emit('message', formatMessage(botName, `${user.username} has joined the chat`));
 
+        console.log(getUsers());
+        //send users info
+        io.emit('roomUsers',
+            getUsers() 
+         );
+
         //Run when client disconnects
         socket.on('disconnect', () => {
             const user = removeUser(socket.id);
             if(user) {
                 io.emit('message', formatMessage(botName, `${user.username} left the chat`));
             }
+
+            //send users info
+            io.emit('roomUsers',
+                getUsers() 
+            );
+
         });
 
         //Listen for chatMessage
