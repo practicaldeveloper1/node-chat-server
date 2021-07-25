@@ -31,12 +31,12 @@ function outputMessage(message) {
     div.classList.add('message');
     const p = document.createElement('p');
     p.classList.add('meta');
-    p.innerText = 'username';
-    p.innerHTML += `<span> 11.00 AM </span>`;
+    p.innerText = message.username;
+    p.innerHTML += `<span> ${message.time} </span>`;
     div.appendChild(p);
     const para = document.createElement('p');
     para.classList.add('text');
-    para.innerText = message;
+    para.innerText = message.text;
     div.appendChild(para);
     document.querySelector('.chat-messages').appendChild(div);
 }
