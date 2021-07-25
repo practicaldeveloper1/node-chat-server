@@ -1,10 +1,25 @@
 const users = [];
 
 // Join user to chat
-function userJoin(id, username, locale) {
+function addUser(id, username, locale) {
     const user = {id, username, locale};
     users.push(user);
     return user;    
+}
+
+// Join leaves chat
+function removeUser(id) {
+    const index = users.findIndex(user => user.id === id);
+
+    if(index !== -1) {
+        return users.splice(index, 1);
+    }
+}
+
+//Get Users
+function getUsers() {
+    return users;
+
 }
 
 function getUser(id) {
@@ -12,6 +27,8 @@ function getUser(id) {
 }
 
 module.exports = {
-    userJoin,
-    getUser
+    addUser,
+    getUser,
+    getUsers,
+    removeUser,
 }
