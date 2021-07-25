@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const {userJoin, getUser} = require('./utils/users');
+const {addUser, getUser, getUsers, removeUser} = require('./utils/users');
 
 
 const app = express();
@@ -20,7 +20,7 @@ io.on('connection', socket => {
     console.log('New WS Connection...')
 
     socket.on('joinRoom', ({username, locale}) => {
-        const user = userJoin(socket.id, username, locale);
+        const user = addUser(socket.id, username, locale);
 
         //Welcome current user
         socket.emit('message', formatMessage(botName, 'Welcome to the Chat'));
@@ -30,7 +30,10 @@ io.on('connection', socket => {
 
         //Run when client disconnects
         socket.on('disconnect', () => {
-            io.emit('message', formatMessage(botName, 'A user left the chat'));
+            const user = removeUser(socket.id);
+            if(user) {
+                io.emit('message', formatMessage(botName, `${user.username} left the chat`));
+            }
         });
 
         //Listen for chatMessage
