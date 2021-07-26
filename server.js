@@ -6,6 +6,10 @@ const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const {addUser, getUser, getUsers, removeUser} = require('./utils/users');
 const router = require('./api');
+const {
+    serverErrorHandler,
+    notFoundErrorHandler,
+} = require('./api/error');
 
 const app = express();
 const server = http.createServer(app);
@@ -14,7 +18,8 @@ const io = socketio(server);
 //Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(router);
-
+app.use(serverErrorHandler);
+app.use(notFoundErrorHandler);
 
 const botName = 'Chat Bot';
 
