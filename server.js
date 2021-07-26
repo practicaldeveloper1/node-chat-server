@@ -17,6 +17,10 @@ const io = socketio(server);
 
 //Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+// for parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true })) 
+
 app.use(router);
 app.use(serverErrorHandler);
 app.use(notFoundErrorHandler);
