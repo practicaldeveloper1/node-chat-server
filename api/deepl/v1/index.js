@@ -53,8 +53,9 @@ router.get('/languages', (req, res, next) => {
 
 router.get('/translate', validateTranslateReq, (req, res, next) => {
 
-    const {text, target_lang} = req.body
+    const {text, target_lang} = req.query
     return doTranslate(text, target_lang, res, next);
+    
 });
 
 module.exports = router;
