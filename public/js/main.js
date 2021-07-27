@@ -65,3 +65,8 @@ function outputUsers(users) {
         userList.appendChild(li);
     });
 }
+
+function onLoadIndex() {
+    console.log('index loaded')
+  //  axios.get('/user?ID=12345')
+}

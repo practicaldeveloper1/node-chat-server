@@ -9,7 +9,7 @@
     <title>Sample Chat App</title>
 </head>
 
-<body>
+<body onload="onLoadIndex()">
     <div class="join-container">
         <main class="join-main">
             <form action="chat.html">
@@ -18,13 +18,17 @@
                     <input type="text" name="username" id="username" placeholder="Enter username..." required />
                 </div>
                 <div class="form-control">
-                    <label for="locale">Locale</label>
-                    <input type="text" name="locale" id="locale" placeholder="Enter locale..." required />
+                    <label for="locale-select">Locale</label>
+                    <select id="locale-select" name="locale">
+                        <option selected disabled>Choose here</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn">Join Chat</button>
             </form>
         </main>
     </div>
+    <script src="js/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
