@@ -25,19 +25,31 @@ socket.on('message', message => {
 })
 
 //Message submit
-chatForm.addEventListener('submit', e => {
+chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     //Get message text
     const msg = e.target.elements.msg.value;
-    
+
+    const config = {
+        params: {
+            text: msg,
+            target_lang: locale
+        },
+    }
+    const { data: { data: { translations } } } = await axios.get('http://localhost:5000/api/deepl/v1/translate', config);
+
     //Emit message to server
-    socket.emit('chatMessage', msg);
+    socket.emit('chatMessage', translations[0].text);
 
     //Clear inputs
     e.target.elements.msg.value = '';
     e.target.elements.msg.focus();
 })
+
+async function translateRequest() {
+    // do the await things here.
+}
 
 // Output message to DOM
 function outputMessage(message) {
@@ -64,9 +76,4 @@ function outputUsers(users) {
         li.innerText = user.username;
         userList.appendChild(li);
     });
-}
-
-function onLoadIndex() {
-    console.log('index loaded')
-  //  axios.get('/user?ID=12345')
 }
