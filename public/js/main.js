@@ -37,7 +37,7 @@ chatForm.addEventListener('submit', async (e) => {
             target_lang: locale
         },
     }
-    const { data: { data: { translations } } } = await axios.get('http://localhost:5000/api/deepl/v1/translate', config);
+    const { data: { data: { translations } } } = await axios.get(`${window.location.origin}/api/deepl/v1/translate`, config);
 
     //Emit message to server
     socket.emit('chatMessage', translations[0].text);
