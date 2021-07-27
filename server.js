@@ -7,6 +7,7 @@ const formatMessage = require('./utils/messages');
 const {addUser, getUser, getUsers, removeUser} = require('./utils/users');
 const router = require('./api');
 const {
+    clientErrorHandler,
     serverErrorHandler,
     notFoundErrorHandler,
 } = require('./api/error');
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true })) 
 
 app.use(router);
+app.use(clientErrorHandler);
 app.use(serverErrorHandler);
 app.use(notFoundErrorHandler);
 
