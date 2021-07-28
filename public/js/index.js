@@ -33,6 +33,9 @@ function submitForm() {
         document.getElementById('chatroom-new-input').removeAttribute('name');
         document.getElementById('chatroom-disable-messages').removeAttribute('name');
     }
+    else {
+        document.getElementById('chatroom-select').removeAttribute('name');
+    }
 
 }
 
