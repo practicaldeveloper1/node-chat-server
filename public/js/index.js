@@ -18,11 +18,20 @@ async function getChatrooms() {
 }
 
 function submitForm() {
-    //not submit chatroomOption property
-    document.getElementById('chatroom-new-option').removeAttribute('name');
 
     //form can be submitted when selecting existing chat
     document.getElementById('chatroom-new').required = false;
+
+    //no need to get new or existing chatroom property
+    document.getElementById('chatroom-new-option').removeAttribute('name');
+    document.getElementById('chatroom-existing-option').removeAttribute('name');
+
+    //remove new chatroom values when join existing chatroom
+    if (!document.getElementById('chatroom-new-option').checked) {
+        document.getElementById('chatroom-new').removeAttribute('name');
+        document.getElementById('chatroom-disable-messages').removeAttribute('name');
+    }
+
 }
 
 
