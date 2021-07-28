@@ -3,14 +3,14 @@ const chatMessages = document.querySelector('.chat-messages');
 const userList = document.getElementById('users');
 
 // Get username and room from URL
-const { username, locale } = Qs.parse(location.search, {
+const { username, locale, chatroom, chatroomOption } = Qs.parse(location.search, {
     ignoreQueryPrefix: true,
 });
 
 const socket = io();
 
 //Join chat
-socket.emit('joinRoom', {username, locale});
+socket.emit('joinRoom', { username, locale, chatroom, chatroomOption });
 
 //Get Users
 socket.on('roomUsers', username => {
@@ -47,10 +47,6 @@ chatForm.addEventListener('submit', async (e) => {
     e.target.elements.msg.focus();
 })
 
-async function translateRequest() {
-    // do the await things here.
-}
-
 // Output message to DOM
 function outputMessage(message) {
     const div = document.createElement('div');
@@ -71,7 +67,7 @@ function outputMessage(message) {
 function outputUsers(users) {
     console.log(users);
     userList.innerHTML = '';
-    users.forEach( user => {
+    users.forEach(user => {
         const li = document.createElement('li');
         li.innerText = user.username;
         userList.appendChild(li);
