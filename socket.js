@@ -20,9 +20,6 @@ module.exports.listen = function (server) {
             if (!chatroomExists) {
                 addChatroom(chatroom, username)
             }
-            else {
-                console.log(getChatroom(chatroom))
-            }
 
             const user = addUser(socket.id, username, locale, chatroom);
 
