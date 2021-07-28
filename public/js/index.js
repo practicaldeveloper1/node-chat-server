@@ -1,5 +1,9 @@
 
 async function onLoadIndex() {
+
+    if (event.originalEvent.persisted) {
+        window.location.reload();
+    }
     const { data: { data: localesArray } } = await axios.get(`${window.location.origin}/api/deepl/v1/languages`);
     const localeSelectEl = document.getElementById("locale-select");
 

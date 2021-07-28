@@ -9,7 +9,7 @@
     <title>Sample Chat App</title>
 </head>
 
-<body onload="onLoadIndex()">
+<body onload="onPageLoad()">
     <div class="join-container">
         <main class="join-main">
             <form action="chat.html" onSubmit="submitForm()">
@@ -33,8 +33,8 @@
                     <label for="chatroom-existing-option">Join existing chatroom</label>
                 </div>
                 <div class="form-control" id="chatroom-new-div">
-                    <label for="chatroom-new">Create new Chatroom</label>
-                    <input type="text" name="chatroom" id="chatroom-new" placeholder="Enter chatroom name..." required/>
+                    <label for="chatroom-new-input">Create new Chatroom</label>
+                    <input type="text" name="chatroom" id="chatroom-new-input" placeholder="Enter chatroom name..." required/>
                     <div class="flex">
                         <input type="checkbox" name="chatroomDisableMessages" id="chatroom-disable-messages"/>
                         <label for="chatroom-disable-messages"></label>Disallow anyone to send messages to the chatroom</label>
