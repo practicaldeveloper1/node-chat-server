@@ -10,7 +10,7 @@ const { username, locale, chatroom, chatroomOption } = Qs.parse(location.search,
 const socket = io();
 
 //Join chat
-socket.emit('joinRoom', { username, locale, chatroom, chatroomOption });
+socket.emit('joinRoom', { username, locale, chatroom });
 
 //Get Users
 socket.on('roomUsers', username => {

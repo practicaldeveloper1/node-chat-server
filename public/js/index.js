@@ -17,6 +17,14 @@ async function getChatrooms() {
     }
 }
 
+function submitForm() {
+    //not submit chatroomOption property
+    document.getElementById('chatroom-new-option').removeAttribute('name');
+
+    //form can be submitted when selecting existing chat
+    document.getElementById('chatroom-new').required = false;
+}
+
 
 document.body.addEventListener('change', e => {
     const target = e.target;
