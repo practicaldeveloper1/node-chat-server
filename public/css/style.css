@@ -107,7 +107,8 @@ body {
   display: flex;
 }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
   margin: 4px;
 }
 
