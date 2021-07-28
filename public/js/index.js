@@ -20,7 +20,7 @@ async function getChatrooms() {
 function submitForm() {
 
     //form can be submitted when selecting existing chat
-    document.getElementById('chatroom-new').required = false;
+    document.getElementById('chatroom-new-input').required = false;
 
     //no need to get new or existing chatroom property
     document.getElementById('chatroom-new-option').removeAttribute('name');
@@ -28,7 +28,7 @@ function submitForm() {
 
     //remove new chatroom values when join existing chatroom
     if (!document.getElementById('chatroom-new-option').checked) {
-        document.getElementById('chatroom-new').removeAttribute('name');
+        document.getElementById('chatroom-new-input').removeAttribute('name');
         document.getElementById('chatroom-disable-messages').removeAttribute('name');
     }
 
