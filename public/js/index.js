@@ -1,7 +1,7 @@
 
 async function onPageLoad() {
 
-    if (event.originalEvent.persisted) {
+    if (event.persisted) {
         window.location.reload();
     }
     const { data: { data: localesArray } } = await axios.get(`${window.location.origin}/api/deepl/v1/languages`);
@@ -23,8 +23,6 @@ async function getChatrooms() {
 
 function submitForm() {
 
-    //form can be submitted when selecting existing chat
-    document.getElementById('chatroom-new-input').required = false;
 
     //no need to get new or existing chatroom property
     document.getElementById('chatroom-new-option').removeAttribute('name');
@@ -47,8 +45,12 @@ document.body.addEventListener('change', e => {
         case 'chatroom-new-option':
             chatroomExistingDiv.classList.add("hidden");
             chatroomNewDiv.classList.remove("hidden");
+            // require new chatroom name
+            document.getElementById('chatroom-new-input').required = true;
             break;
         case 'chatroom-existing-option':
+            //not require new chatroom name
+            document.getElementById('chatroom-new-input').required = false;
             chatroomNewDiv.classList.add("hidden");
             chatroomExistingDiv.classList.remove("hidden");
             getChatrooms();
