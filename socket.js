@@ -13,7 +13,7 @@ module.exports.listen = function (server) {
         console.log('New WS Connection...')
 
         socket.on('joinRoom', ({ username, locale, chatroom }) => {
-            console.log(chatroom);
+
             const user = addUser(socket.id, username, locale, chatroom);
 
             //join the given room
@@ -25,10 +25,10 @@ module.exports.listen = function (server) {
             //Broadcast when a user connects
             socket.broadcast.to(user.chatroom).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
 
-            console.log(getUsers());
+            console.log(getUsers(chatroom));
             //send users info
             io.to(user.chatroom).emit('roomUsers',
-                getUsers()
+                getUsers(chatroom)
             );
 
             //Run when client disconnects
@@ -40,7 +40,7 @@ module.exports.listen = function (server) {
 
                 //send users info
                 io.emit('roomUsers',
-                    getUsers()
+                    getUsers(chatroom)
                 );
 
             });

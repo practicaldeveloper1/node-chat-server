@@ -17,9 +17,8 @@ function removeUser(id) {
 }
 
 //Get Users
-function getUsers() {
-    return users;
-
+function getUsers(chatroom) {
+    return users.filter(user => user.chatroom === chatroom);;
 }
 
 function getUser(id) {
