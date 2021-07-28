@@ -1,6 +1,7 @@
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { addUser, getUser, getUsers, removeUser } = require('./utils/users');
+const { addChatroom, getChatroom } = require('./utils/chatrooms');
 
 const botName = 'Chat Bot';
 
@@ -13,6 +14,15 @@ module.exports.listen = function (server) {
         console.log('New WS Connection...')
 
         socket.on('joinRoom', ({ username, locale, chatroom }) => {
+
+            const chatroomExists = getChatroom(chatroom);
+
+            if (!chatroomExists) {
+                addChatroom(chatroom, username)
+            }
+            else {
+                console.log(getChatroom(chatroom))
+            }
 
             const user = addUser(socket.id, username, locale, chatroom);
 
