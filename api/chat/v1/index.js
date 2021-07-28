@@ -16,7 +16,7 @@ router.get('/chatrooms/:chatroom', (req, res, next) => {
     const chatroom = getChatroom(requestedChatroom);
     return res.json({
         status: 'ok',
-        data: chatroom || []
+        data: chatroom || {}
     });
 });
 
