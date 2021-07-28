@@ -12,7 +12,7 @@
 <body onload="onPageLoad()">
     <div class="join-container">
         <main class="join-main">
-            <form action="chat.html" onSubmit="submitForm()">
+            <form action="chat.html" id="join-form" onSubmit="event.preventDefault(); submitForm();">
                 <div class="form-control">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" placeholder="Enter username..." required />

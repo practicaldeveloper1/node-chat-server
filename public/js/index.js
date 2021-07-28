@@ -21,21 +21,30 @@ async function getChatrooms() {
     }
 }
 
-function submitForm() {
-
-
-    //no need to get new or existing chatroom property
-    document.getElementById('chatroom-new-option').removeAttribute('name');
-    document.getElementById('chatroom-existing-option').removeAttribute('name');
+async function submitForm() {
 
     //remove new chatroom values when join existing chatroom
     if (!document.getElementById('chatroom-new-option').checked) {
         document.getElementById('chatroom-new-input').removeAttribute('name');
         document.getElementById('chatroom-disable-messages').removeAttribute('name');
     }
+
     else {
-        document.getElementById('chatroom-select').removeAttribute('name');
+        //check if chatroom exists
+        const chatroomName = document.getElementById('chatroom-new-input').value
+        const { data: { data } } = await axios.get(`${window.location.origin}/api/chat/v1/chatrooms/${chatroomName}`);
+        console.log(data);
+        if (Object.keys(data).length !== 0) {
+            alert(`chatroom ${chatroomName} already exists!`);
+            return false;
+        }
     }
+
+    //no need to get new or existing chatroom property
+    document.getElementById('chatroom-new-option').removeAttribute('name');
+    document.getElementById('chatroom-existing-option').removeAttribute('name');
+
+    document.getElementById('join-form').submit();
 
 }
 
