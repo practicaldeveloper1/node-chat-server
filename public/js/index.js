@@ -1,5 +1,5 @@
 
-async function onLoadIndex() {
+async function onPageLoad() {
 
     if (event.originalEvent.persisted) {
         window.location.reload();
