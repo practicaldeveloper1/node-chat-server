@@ -12,18 +12,22 @@ module.exports.listen = function (server) {
     io.on('connection', socket => {
         console.log('New WS Connection...')
 
-        socket.on('joinRoom', ({ username, locale }) => {
-            const user = addUser(socket.id, username, locale);
+        socket.on('joinRoom', ({ username, locale, chatroom }) => {
+            console.log(chatroom);
+            const user = addUser(socket.id, username, locale, chatroom);
+
+            //join the given room
+            socket.join(user.chatroom);
 
             //Welcome current user
             socket.emit('message', formatMessage(botName, 'Welcome to the Chat'));
 
             //Broadcast when a user connects
-            socket.broadcast.emit('message', formatMessage(botName, `${user.username} has joined the chat`));
+            socket.broadcast.to(user.chatroom).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
 
             console.log(getUsers());
             //send users info
-            io.emit('roomUsers',
+            io.to(user.chatroom).emit('roomUsers',
                 getUsers()
             );
 
@@ -31,7 +35,7 @@ module.exports.listen = function (server) {
             socket.on('disconnect', () => {
                 const user = removeUser(socket.id);
                 if (user) {
-                    io.emit('message', formatMessage(botName, `${user.username} left the chat`));
+                    io.to(user.chatroom).emit('message', formatMessage(botName, `${user.username} left the chat`));
                 }
 
                 //send users info
@@ -44,7 +48,7 @@ module.exports.listen = function (server) {
             //Listen for chatMessage
             socket.on('chatMessage', msg => {
                 const user = getUser(socket.id);
-                io.emit('message', formatMessage(user.username, msg));
+                io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
             })
         })
     })

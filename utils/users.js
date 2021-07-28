@@ -1,17 +1,17 @@
 const users = [];
 
 // Join user to chat
-function addUser(id, username, locale) {
-    const user = {id, username, locale};
+function addUser(id, username, locale, chatroom) {
+    const user = { id, username, locale, chatroom };
     users.push(user);
-    return user;    
+    return user;
 }
 
 // Join leaves chat
 function removeUser(id) {
     const index = users.findIndex(user => user.id === id);
 
-    if(index !== -1) {
+    if (index !== -1) {
         return users.splice(index, 1)[0];
     }
 }
