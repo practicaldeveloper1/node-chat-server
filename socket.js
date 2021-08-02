@@ -55,7 +55,7 @@ module.exports.listen = function (server) {
             //Listen for chatMessage
             socket.on('chatMessage', msg => {
                 const user = getUser(socket.id);
-                if (user.username === chatroomInfo.adminName) {
+                if (user.username === chatroomInfo.adminName || chatroomInfo.disableMessages !== 'on') {
                     io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
                 }
                 else {
