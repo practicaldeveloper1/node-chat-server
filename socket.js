@@ -21,7 +21,8 @@ module.exports.listen = function (server) {
                 chatroomInfo = addChatroom(chatroom, username, disableMessages)
             }
 
-            const user = addUser(socket.id, username, locale, chatroom);
+            //assume that username is the unique user ID for simplicity, normally there should be a unique ID per user
+            const user = addUser(username, username, locale, chatroom);
 
             //join the given room
             socket.join(user.chatroom);
@@ -40,7 +41,7 @@ module.exports.listen = function (server) {
 
             //Run when client disconnects
             socket.on('disconnect', () => {
-                const user = removeUser(socket.id);
+                const user = removeUser(username);
                 if (user) {
                     io.to(user.chatroom).emit('message', formatMessage(botName, `${user.username} left the chat`));
                 }
@@ -54,7 +55,7 @@ module.exports.listen = function (server) {
 
             //Listen for chatMessage
             socket.on('chatMessage', msg => {
-                const user = getUser(socket.id);
+                const user = getUser(username);
                 if (user.username === chatroomInfo.adminName || chatroomInfo.disableMessages !== 'on') {
                     io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
                 }
