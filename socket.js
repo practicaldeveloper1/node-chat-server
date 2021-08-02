@@ -13,12 +13,12 @@ module.exports.listen = function (server) {
     io.on('connection', socket => {
         console.log('New WS Connection...')
 
-        socket.on('joinRoom', ({ username, locale, chatroom }) => {
+        socket.on('joinRoom', ({ username, locale, chatroom, disableMessages }) => {
 
-            const chatroomExists = getChatroom(chatroom);
+            let chatroomInfo = getChatroom(chatroom);
 
-            if (!chatroomExists) {
-                addChatroom(chatroom, username)
+            if (!chatroomInfo) {
+                chatroomInfo = addChatroom(chatroom, username, disableMessages)
             }
 
             const user = addUser(socket.id, username, locale, chatroom);
@@ -55,7 +55,14 @@ module.exports.listen = function (server) {
             //Listen for chatMessage
             socket.on('chatMessage', msg => {
                 const user = getUser(socket.id);
-                io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
+                if (user.username === chatroomInfo.adminName) {
+                    io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
+                }
+                else {
+                    //Notice current user that messages are disabled
+                    socket.emit('message', formatMessage(botName, 'Only admin can send messages'));
+
+                }
             })
         })
     })
