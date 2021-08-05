@@ -11,11 +11,13 @@ Please keep the auth_key.
 2. On the root folder of the server, please create a .env file and add the parameters PORT (the port you want the server to listen) and DEEPL_AUTH_KEY (your DeepL auth_key) as below.
 
 PORT=5000
+
 DEEPL_AUTH_KEY=hjhjh-hjhjh-hjhjhj-hjhj-hjhjh:fx
 
 3. On CMD or a terminal, go to the root folder of the project and run the following commands.
 
 npm install
+
 npm start
 
 The server should start at the port you defined.
