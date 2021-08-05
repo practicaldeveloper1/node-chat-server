@@ -39,6 +39,8 @@ async function submitForm() {
             alert(`chatroom ${chatroomName} already exists!`);
             return false;
         }
+        //remove existing chatroom value when join new chatroom
+        document.getElementById('chatroom-select').removeAttribute('name');
     }
 
     //no need to get new or existing chatroom property
