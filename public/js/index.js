@@ -1,6 +1,7 @@
 
 async function onPageLoad() {
 
+    //refresh page when pressing back button on browser
     if (event.persisted) {
         window.location.reload();
     }
@@ -57,7 +58,7 @@ document.body.addEventListener('change', e => {
         case 'chatroom-new-option':
             chatroomExistingDiv.classList.add("hidden");
             chatroomNewDiv.classList.remove("hidden");
-            // require new chatroom name
+            //require new chatroom name
             document.getElementById('chatroom-new-input').required = true;
             break;
         case 'chatroom-existing-option':

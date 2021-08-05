@@ -17,6 +17,7 @@ module.exports.listen = function (server) {
 
             let chatroomInfo = getChatroom(chatroom);
 
+            // create new chatroom if chatroom with given name don't exist
             if (!chatroomInfo) {
                 chatroomInfo = addChatroom(chatroom, username, disableMessages)
             }
@@ -55,6 +56,7 @@ module.exports.listen = function (server) {
 
             //Listen for chatMessage
             socket.on('chatMessage', msg => {
+
                 const user = getUser(username);
                 if (user.username === chatroomInfo.adminName || chatroomInfo.disableMessages !== 'on') {
                     io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
@@ -67,5 +69,4 @@ module.exports.listen = function (server) {
             })
         })
     })
-
 }

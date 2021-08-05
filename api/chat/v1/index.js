@@ -11,7 +11,6 @@ router.get('/chatrooms', (req, res, next) => {
 });
 
 router.get('/chatrooms/:chatroom', (req, res, next) => {
-    console.log(req.params);
     const { chatroom: requestedChatroom } = req.params;
     const chatroom = getChatroom(requestedChatroom);
     return res.json({

@@ -1,13 +1,13 @@
 const users = [];
 
-// Join user to chat
+//User join a chat
 function addUser(id, username, locale, chatroom) {
     const user = { id, username, locale, chatroom };
     users.push(user);
     return user;
 }
 
-// Join leaves chat
+//Join leaves a chat
 function removeUser(id) {
     const index = users.findIndex(user => user.id === id);
 
