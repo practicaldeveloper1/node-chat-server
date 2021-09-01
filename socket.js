@@ -58,10 +58,11 @@ module.exports.listen = function (server) {
             //Listen for chatMessage
             socket.on('chatMessage', async (msg) => {
                 const user = getUser(socket.id);
-                console.log(user.id);
-                console.log(chatroomInfo.adminID);
+
                 if (user.id === chatroomInfo.adminID || chatroomInfo.disableMessages !== 'on') {
+                    //get all the users of the chatroom
                     const chatroomUsers = getUsers(chatroom);
+                    //send to each user the message translated to the selected locale
                     await Promise.all(chatroomUsers.map(async (chatroomUser) => {
                         const translatedMessage = await translateText(msg, chatroomUser.locale);
                         io.to(chatroomUser.id).emit('message', formatMessage(user.username, translatedMessage));
