@@ -1,8 +1,8 @@
 const chatrooms = [];
 
 // add a new chatroom
-function addChatroom(name, adminName, disableMessages) {
-    const chatroom = { name, adminName, disableMessages };
+function addChatroom(name, adminID, disableMessages) {
+    const chatroom = { name, adminID, disableMessages };
     chatrooms.push(chatroom);
     return chatroom;
 }

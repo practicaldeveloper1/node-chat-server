@@ -2,6 +2,7 @@ const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { addUser, getUser, getUsers, removeUser } = require('./utils/users');
 const { addChatroom, getChatroom } = require('./utils/chatrooms');
+const { translateText } = require('./services/deepl');
 
 const botName = 'Chat Bot';
 
@@ -19,11 +20,11 @@ module.exports.listen = function (server) {
 
             // create new chatroom if chatroom with given name don't exist
             if (!chatroomInfo) {
-                chatroomInfo = addChatroom(chatroom, username, disableMessages)
+                chatroomInfo = addChatroom(chatroom, socket.id, disableMessages)
             }
 
             //assume that username is the unique user ID for simplicity, normally there should be a unique ID per user
-            const user = addUser(username, username, locale, chatroom);
+            const user = addUser(socket.id, username, locale, chatroom);
 
             //join the given room
             socket.join(user.chatroom);
@@ -42,7 +43,7 @@ module.exports.listen = function (server) {
 
             //Run when client disconnects
             socket.on('disconnect', () => {
-                const user = removeUser(username);
+                const user = removeUser(socket.id);
                 if (user) {
                     io.to(user.chatroom).emit('message', formatMessage(botName, `${user.username} left the chat`));
                 }
@@ -55,11 +56,16 @@ module.exports.listen = function (server) {
             });
 
             //Listen for chatMessage
-            socket.on('chatMessage', msg => {
-
-                const user = getUser(username);
-                if (user.username === chatroomInfo.adminName || chatroomInfo.disableMessages !== 'on') {
-                    io.to(user.chatroom).emit('message', formatMessage(user.username, msg));
+            socket.on('chatMessage', async (msg) => {
+                const user = getUser(socket.id);
+                console.log(user.id);
+                console.log(chatroomInfo.adminID);
+                if (user.id === chatroomInfo.adminID || chatroomInfo.disableMessages !== 'on') {
+                    const chatroomUsers = getUsers(chatroom);
+                    await Promise.all(chatroomUsers.map(async (chatroomUser) => {
+                        const translatedMessage = await translateText(msg, chatroomUser.locale);
+                        io.to(chatroomUser.id).emit('message', formatMessage(user.username, translatedMessage));
+                    }));
                 }
                 else {
                     //Notice current user that messages are disabled

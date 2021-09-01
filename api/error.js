@@ -9,7 +9,6 @@ class ClientError extends Error {
 
 
 const clientErrorHandler = (err, req, res, next) => {
-    console.log(err);
     if (err instanceof ClientError) {
         const statusCode = err.statusCode;
         const message = err.message;
@@ -47,4 +46,4 @@ const notFoundErrorHandler = (req, res) => {
     });
 };
 
-module.exports = {ClientError, clientErrorHandler, serverErrorHandler, notFoundErrorHandler};
+module.exports = { ClientError, clientErrorHandler, serverErrorHandler, notFoundErrorHandler };

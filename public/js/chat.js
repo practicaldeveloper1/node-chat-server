@@ -31,16 +31,18 @@ chatForm.addEventListener('submit', async (e) => {
     //Get message text
     const msg = e.target.elements.msg.value;
 
+    /*
     const config = {
         params: {
             text: msg,
             target_lang: locale
         },
     }
-    const { data: { data: { translations } } } = await axios.get(`${window.location.origin}/api/deepl/v1/translate`, config);
+    const { data: { data: translatedText } } = await axios.get(`${window.location.origin}/api/deepl/v1/translate`, config);
 
+    */
     //Emit message to server
-    socket.emit('chatMessage', translations[0].text);
+    socket.emit('chatMessage', msg);
 
     //Clear inputs
     e.target.elements.msg.value = '';
